@@ -198,7 +198,53 @@ public class Test {
     */
     ```
 
-- 32
+- Identifiers
+
+  - 클래스 내의 식별자(클래스명, 변수명, 상수명, 메서드명 등)을 명명하는 방법
+    - class : 첫글자는 대문자로 시작, 나머지 글자는 소문자
+    - method : 모두 소문자
+    - variable : 모두 소문자
+    - constant(primitive) : 모두 대문자
+  - 유니코드 문자,_,$로 시작할 수 있으며, 두번째 글자부터 숫자를 허용
+  - Java는 대소문자를 구별, 길이에 제한이 없다.
+
+- Primitive Type Casting 
+
+  - Automatic promotions (implicit Type Casting)
+
+    - 작은 크기의 타입은 큰 크기의 타입으로 자동으로 형 변환된다.
+
+    - 정수형을 실수형으로 자동형변환 된다.
+
+      ```java
+      'A'+1 == 66
+      'A'++ == 'B'
+          
+      long var = 100;
+      float fvar = var;
+      int kvar = 'A';
+      
+      int i = 30;
+      long x = i;
+      double d = x;
+      ```
+
+  - Explicit Type Casting
+
+    - 큰 크기의 타입이 작은 크기의 타입으로 변경할 경우
+
+    - 실수형이 정수형 타입으로 변경할 경우
+
+      ```java
+      identifier = (target_type) value;
+      float fvar = 100;
+      long var = (long) fvar;
+      
+      int a = (int)3.4;
+      char c = (char) 65;
+      ```
+
+      
 
 'A' : char 타입은 `' '`로 표기한다.
 
@@ -214,11 +260,77 @@ print(c) // B가 출력된다. char형으로 연산되기 때문
 
 
 
+### 4. 조건문
+
+43
+
+break는 나를 감싸고 있는 가장 가까운 반복문을 빠져나감.
+
+continue는 조건을 만족하는 경우 가장 가까운 반복문을 계속 한다.
+
 
 
 switch 문이 속도가 더 빠름.
 
 expr1은 반드시 정수형(int, byte, short, char), 문자열(string)이어야 함
+
+
+
+### 5. 반복문
+
+
+
+
+
+### 6. 1차원 Array
+
+ 대량의 데이터를 하나의 이름으로 저장하여 편리하게 사용하고 이동하기 위해 배열을 사용
+
+ Java에서 배열은 객체이다. 객체를 생성하여 사용하듯이 배열도 객체 생성하여 사용
+
+- Java의 배열은 new를 이용하여 instance를 생성하여 사용한다.
+
+  ```java
+  int[] su = new int[7];
+  int su[] = new int[7];
+  ```
+
+- 배열의 길이 구하기 `int len = su.length;`
+
+- 배열 사용
+
+  - 배열 선언 : []을 이용하여 배열을 선언 `int[] su;` `int su[];`
+  - 배열 생성 : new를 이용하여 생성하고 값 저장 `su = new int[50];` 
+
+- 변수 선언과 생성을 동시에 정의 `int[] su = new int[50]`
+
+- 변수 선언과 생성, 값할당 동시에 처리 
+
+  ```java
+  int[] su = {10,20,30,40,50,60,70};
+  int[] su = new int[]{10,20,30,40,50,60,70};
+  public void arr(int[] a){
+      
+  }
+  arr(su);
+  arr(new int[]{1,2,3,4,5,6,7});
+  ```
+
+  
+
+문자열 자르기 : `String.split(" ")`
+
+양쪽 여백 제거 : `String.trim()`
+
+랜덤값 생성 
+
+- `Random()` 임의의 값 생성
+  - `r.nextInt()` : 랜덤 값
+  - `r.nextInt(45)` : 0과 45 사이의 랜덤 값
+  - 로또 번호는 1 ~ 45 의 랜덤 숫자 -> `r.nextInt(45)+1`
+- `Math.random()` 0과 1사이의 실수 
+
+
 
 ---
 
