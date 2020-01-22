@@ -25,10 +25,10 @@ public class Gravity {
 			
 			for(int i=0; i<mapSize; i++) {
 				int num = blockAr[i];
-				int cnt = 1;
+				int cnt = 0;
 				for(int j=i+1; j<mapSize; j++) {
 					if(blockAr[j]>=num) {
-						break;
+						continue;
 					}
 					cnt++;
 				}
