@@ -24,8 +24,16 @@ public class FillCell06 {
 			int r = sc.nextInt();
 			int c = sc.nextInt();
 			
-			for(int j=1; j<count+1; j++) {
-				
+			for(int cnt=1; cnt<count+1; cnt++) {
+				for(int k=0; k<dn; k++) {
+					int nr = r + dirR[k]*cnt;
+					int nc = c + dirC[k]*cnt;
+					
+					if(nr>-1 && nr<N && nc>-1 && nc<N && map[nr][nc]==0) {
+						map[nr][nc]=1;
+					}
+					
+				}
 				
 			}
 			
