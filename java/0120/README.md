@@ -258,27 +258,46 @@ c++;
 print(c) // B가 출력된다. char형으로 연산되기 때문
 ```
 
+#### method 안에 들어갈 수 있는 것들
 
+- 선언문
+- 조건문
+- 대입문
+- 반복문
+- method 호출
+- return
 
 ### 4. 조건문
 
+```
+if(조건){
+
+}
+```
+
+- if 문의 조건은 true/false 값. 1/0 불가능
+
+
+
 43
 
-break는 나를 감싸고 있는 가장 가까운 반복문을 빠져나감.
+break는 나를 감싸고 있는 가장 가까운 반복문을 빠져나감.6
 
 continue는 조건을 만족하는 경우 가장 가까운 반복문을 계속 한다.
 
-
+#### switch
 
 switch 문이 속도가 더 빠름.
 
-expr1은 반드시 정수형(int, byte, short, char), 문자열(string)이어야 함
+break 필수
+
+expr1은 반드시 정수형(int, byte, short, char), 문자열(string)이어야 함. long 안됨.
 
 
 
 ### 5. 반복문
 
-
+51
 
 
 
@@ -329,6 +348,18 @@ expr1은 반드시 정수형(int, byte, short, char), 문자열(string)이어야
   - `r.nextInt(45)` : 0과 45 사이의 랜덤 값
   - 로또 번호는 1 ~ 45 의 랜덤 숫자 -> `r.nextInt(45)+1`
 - `Math.random()` 0과 1사이의 실수 
+
+#### Array copy
+
+`System.arraycopy(A, 0, B, 0, A.length)` : A의 배열 0번방부터 A 배열 길이만큼 B의 0번방부터 복사해라.
+
+### 7. 2차원 배열
+
+`int[][] a = new int[3][4];` : 3행 4열인 2차원 배열 생성
+
+
+
+
 
 
 

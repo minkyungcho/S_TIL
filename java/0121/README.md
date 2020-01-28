@@ -12,7 +12,7 @@ Thread.sleep(2*60*60*1000); //계산된 값을 넣지 않고 수식을 다 입�
 
 3항 연산자
 
-`변수 - (조건) ? 값1 : 값2;` 조건이 참이면 변수에 값1이 저장됨, 거짓이면 변수에 값2 저장됨
+`변수 = (조건) ? 값1 : 값2;` 조건이 참이면 변수에 값1이 저장됨, 거짓이면 변수에 값2 저장됨
 
 
 
@@ -25,6 +25,87 @@ double d = 3.567D; // double형으로 인식
 30 이면 int 로 인식함.
 30L이라고 쓰면 long 으로 인식
 ```
+
+
+
+```java
+package ~.~.~; // com.samsung.xxx 이런식으로 어느회사에서 만들었는지 표기함
+import ~~~; // 여러개 import 할 수 있음
+public class 클래스명{
+    type 변수명;
+    type 변수명 = 값;
+}
+```
+
+- java.lang은 컴파일할때 자동적으로 import한다. 굳이 import할 필요 없음.
+  - math
+  - system
+  - String
+
+
+
+UML 분석설계 - class, 변수, 메서드
+
+RUP
+
+UP
+
+Agile
+
+
+
+#### shift 연산
+
+- 왼쪽으로 미는것은 곱하기
+- 오른쪽으로 미는것은 나누기
+
+```java
+int a = 15;
+// 2진수로 찍기
+System.out.println(Integer.toBinaryString(a)); // 1111
+a = a<<33; // 11110 : 연산하기 전에 %32를 먼저 처리한다.
+```
+
+- mask : 8자리 꺼내기
+  - 11111111(2) 는 255 인 mask 변수 하나 지정
+  - mask와 and 연산을 통해 뒤 8자리의 숫자만 꺼내온다.
+
+```java
+int a = 2020;
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+a = a<<8;
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+a = a+1;
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+a = a<<8;
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+a = a+28;
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+
+int mask = 255; // 8자리 11111111 
+System.out.printf("%32s\n", Integer.toBinaryString(mask));
+
+int day = a & mask; // and 연산을 통해 마지막 8자리 숫자만 꺼내온다.
+System.out.printf("%32s\n", Integer.toBinaryString(day));
+System.out.println(day); // 28
+a = a>>8; // 8자리를 빼내었으니 다시 뒤로 8번 밀기
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+int month = a & mask;
+System.out.printf("%32s\n", Integer.toBinaryString(month));
+System.out.println(month); // 1
+a = a>>8; // 8자리를 빼내었으니 다시 뒤로 8번 밀기
+System.out.printf("%32s\n", Integer.toBinaryString(a));
+System.out.println(a); // 2020
+```
+
+
+
+
+
+- 메서드 이름이 같은 애들이 있으면 그건 오버로딩!
+- `toString(int i)` 
+- `toString(int i, int radix)` : radix는 진법. 진법연산 가능
+- 
 
 
 
