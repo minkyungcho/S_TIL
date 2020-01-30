@@ -196,7 +196,7 @@ int[] dirC = {0, 0, -1, 1, -1, 1, -1, 1};
 
 
 
-### 부분 집합 subset
+### :star: 부분 집합 subset :star:
 
 - 완전 검색
 
@@ -417,11 +417,7 @@ public class Permutation_nPIr {
 
 
 
-
-
-
-
-#### 순열
+#### :star: 순열 :star:
 
 nPn = n * (n-1) * (n-2) * ... * 1 = n!
 
@@ -538,19 +534,146 @@ public class Permutation_nPn2 {
 }
 ```
 
-비트마스크 활용하여 중복제거
+**비트마스크 활용하여 중복제거**
 
+- 공간복잡도 안쓰지만 시간복잡도는 쓴다
+- 인자가 필요해. 중복여부를 나타내주는 flag
 
+```java
+public class Permutation_nPn3_bit {
+	
+	static int N; 			// 원소 수
+	static int[] numbers; 	// 순열을 담을 배열
+	static int testcase; 	// 순열의 수
+	
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		numbers = new int[N]; 
+		permutation(0, 0); // 
+		System.out.printf("순열 %dP%d의 개수 : %d", N, N, testcase);
+		
+	}
+	
+	/**
+	 * 순열을 만들 함수
+	 * cnt : 배열의 index
+	 * flag : 데이터의 중복 여부를 검사할 bit mask
+	 */
+	private static void permutation(int cnt, int flag) {
+		
+		if(cnt == N) { 
+			testcase++;
+			System.out.println(Arrays.toString(numbers));
+			return;
+		}
+		top:
+		for(int i=1; i<N+1; i++) {
+			// 중복검사 : 0번째 원소부터 현재 원소 전까지 i값이 출현했는지 검사
+			if((flag & 1<<i) == 0) { // 0 이면 사용하지 않은 것, 0이 아니면 사용한 것
+				// 중복되지 않은 경우 cnt 번째에 i 데이터를 넣는다.
+				numbers[cnt] = i;
+				permutation(cnt+1, flag | 1<<i); // flag에 i 사용했다고 표시한다.
+			}
+		}
+	}
+
+}
+```
 
 
 
 #### 조합
 
-nCr = n! / { (n-r)! * r! }
+nCr = nPr / r! = n! / { (n-r)! * r! }
 
+```java
+public class Combination1 {
+	
+	static int testcase;
+	static int n;
+	static int r;
+	static int[] numbers; // 조합을 담을 배열
+	
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		r = sc.nextInt();
+		numbers = new int[r];
+		
+		combination(0, 1);
+		System.out.printf("%dC%d 조합의 수 : %d", n, r, testcase);
+		
+	}
+	/**
+	 * 조합을 구하는 함수
+	 * @param cnt	배열의 index
+	 * @param start	조합을 시작할 수
+	 */
+	private static void combination(int cnt, int start) {
+		
+		if(cnt == r) {
+			testcase++;
+			System.out.println(Arrays.toString(numbers));
+			return;
+		}
+		for(int i=start; i<n+1; i++) {
+			numbers[cnt] = i;
+			combination(cnt+1, i+1);
+		}
+	}
+
+}
 ```
 
+**subset 활용하여 조합**
+
+- subset이기 때문에 모든 경우를 다 돌리고 그 중에서 r개인 부분집합만 뽑는다.
+
+```java
+public class Combination2 {
+	
+//	static int[] arr = {3,6,7,1,5};
+	static int[] arr = {1,2,3,4,5};
+	static int r;
+	static int[] combi;
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		r = sc.nextInt();
+		int n = arr.length;
+		combi = new int[n]; // subset을 만들기 때문에
+		
+		int k; // 배열의 index => 조합의 수 
+		
+		for(int i=0, size=1<<n; i<size; i++) { // i : 0 ~ 15
+			k = 0;
+			for(int j=0; j<n; j++) {
+				if((i & 1<<j) != 0) {
+					combi[k++] = j;
+				}
+			}
+			if(k==r) {
+				print();
+			}
+		
+		}
+	}
+	private static void print() {
+		
+		for(int i=0; i<r; i++) {
+			System.out.print(arr[combi[i]]+" ");
+		}
+		System.out.println();
+		
+	}
+}
 ```
+
+
 
 
 
@@ -667,4 +790,137 @@ public class RecursiveCallFibo {
 
 }
 ```
+
+**피보나치 수열의 합**
+
+```java
+public static int fibo3(int n, int old, int su) {
+    if(n==1) {
+        System.out.print(su+" ");
+        return su;
+    }
+    System.out.print(su+" ");
+    return su+fibo3(--n, su, old+su);
+}
+public static void main(String[] args) {
+    int n = 7;
+    System.out.printf("%d번째의 수열의 합: %d\n", n, fibo3(n, 0, 1));
+}
+```
+
+
+
+---
+
+#### 0129 review 
+
+- 1175 주사위 :ballot_box_with_check:
+- BitMaskTest
+- SubsetTest2
+
+
+
+#### 0130 review
+
+- dd
+
+
+
+---
+
+### 카운팅 정렬 Counting Sort
+
+> 알고리즘 교재 p.42
+
+- sorting 중에서 가장 낮은 시간복잡도를 가지고 있음.
+
+- k : 표현할 수 있는 최대값
+- 최빈값 구하기
+
+```java
+public class CountSortTest {
+
+	public static void main(String[] args) {
+		
+		int[] data = {0,4,1,3,1,2,4,1};
+		int n = data.length;
+		int[] temp = new int[n];
+		
+		// step1. max값 찾고 카운트 배열 선언
+		int max = Integer.MIN_VALUE;
+		for(int d : data) {
+			max = Math.max(max, d);
+		}
+		int[] count = new int[max+1];
+		
+		// step2. 데이터 카운팅 (데이터의 출현 빈도수)
+		for(int d : data) {
+			count[d]++;
+		}
+		
+		// step3. 카운팅 배열에 빈도수를 누적하기
+		for(int i=1; i<max+1; i++) {
+			count[i] += count[i-1];
+		}
+//		System.out.println(Arrays.toString(count));
+		
+		// step4. 데이터 배열과 카운트 배열 값을 참조해서 temp 배열에 정렬하기
+		int idx = -1; // temp 배열에 저장할 index
+		int d = -1;
+		for(int i=n-1; i>-1; i--) {
+			d = data[i]; 			// 데이터 == count 배열의 index
+			idx = --count[d];	// temp 배열의 index
+			temp[idx] = d;
+		}
+		System.out.println(Arrays.toString(temp));
+		
+	}
+
+}
+```
+
+### 순차검색 Sequential Search
+
+```java
+public class SequentialSearchTest1 {
+
+	public static void main(String[] args) throws FileNotFoundException {
+		
+		System.setIn(new FileInputStream("res/lecture/search.txt"));
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int[] numbers = new int[n];
+		for(int i=0; i<n; i++) {
+			numbers[i] = sc.nextInt();
+		}
+		System.out.println(Arrays.toString(numbers));
+		System.out.println(sequential(numbers, 11));
+	}
+	
+	/**
+	 * 정렬이 안되어 있는 배열에서 원하는 데이터의 위치를 찾는 기능
+	 * @param numbers 	배열
+	 * @param keys		찾을 데이터
+	 * @return			찾은 데이터의 index를 리턴, 못 찾은 경우 -1을 리턴한다.
+	 */
+	private static int sequential(int[] numbers, int key) {
+		
+		for(int j=0, size=numbers.length; j<size; j++) {
+			if(numbers[j] == key) {
+				return j;
+			}
+		}
+		return -1;
+	}
+
+}
+```
+
+
+
+---
+
+### Stack 스택
+
+- 연산
 
