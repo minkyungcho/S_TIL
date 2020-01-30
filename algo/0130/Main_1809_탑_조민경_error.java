@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
  
-public class Main_1809_탑_조민경 {
+public class Main_1809_탑_조민경_error {
  
     public static void main(String[] args) throws FileNotFoundException {
          
@@ -16,24 +16,28 @@ public class Main_1809_탑_조민경 {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         Stack<Integer> stack = new Stack<>();
-        Stack<Integer> idx = new Stack<>();
         int[] towers = new int[n];
+        int[] towerPos = new int[n];
         for(int i=0; i<n; i++) {
-            int top = sc.nextInt();
+            int tower = sc.nextInt();
+            towers[i] = tower;
+            stack.push(tower);
+        }
          
-	        while(!stack.isEmpty() && stack.peek()<top) {
-	        	stack.pop();
-	        	idx.pop();
-	        }
-	        if(!stack.isEmpty() && stack.peek()>top) {
-	        	towers[i] = idx.peek();
-	        }
-	        stack.push(top);
-	        idx.push(i+1);
+        while(!stack.isEmpty()) {
+            int top = stack.pop();
+             
+            for(int i=stack.size(); i>-1; i--) {
+                if(top<towers[i]) {
+                    towerPos[stack.size()] = i+1;
+                    break;
+                }
+            }
         }
-        for(int t : towers) {
-            System.out.print(t+" ");
+        for(int pos : towerPos) {
+            System.out.print(pos+" ");
         }
+//      System.out.println(Arrays.toString(towerPos));
     }
  
 }
