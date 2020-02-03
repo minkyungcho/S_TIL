@@ -193,11 +193,71 @@ for(String name : names) {
 
 
 
+#### 1월 월말평가
+
+5문제
+
+3문제는 쉬운 문제
+
+2문제는 어려움 - 2차원 배열 가지고 놀기
 
 
 
+---
+
+> 2020.02.03 월
+
+### 자바프로그램
+
+#### 구성요소
+
+- 필드(변수) : 변할 수 있는수. 데이터를 담는 그릇
+- 메소드(함수) : 순차적인 문장들의 묶음. 기능정의.  
+- 클래스 : 변수와 메소드를 담아주는 역할
 
 
+
+#### 구성 요소 구분
+
+- 필드(변수)  - 첫글자 소문자, 이름 뒤에 ()소괄호 포함 X
+- 메소드(변수)  - 첫글자 소문자, 이름 뒤에 ()소괄호 포함 O
+- 클래스   - 첫글자 대문자
+
+
+
+### Java 입출력
+
+`System.in.read()` : System class에 있는 in 필드(InputStream이기 때문)의 특성으로 read()가 가능한것
+
+1. InputStream
+2. OutputStream
+3. Reader
+4. Writer
+
+#### Buffered Reader
+
+```java
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+System.out.println("숫자 입력:");
+String str = br.readLine();
+System.out.println("STR : "+str);
+System.out.println(str+500); // "123" + 500 = "123500" 
+System.out.println(Integer.parseInt(str)+500); // 123 + 500 = 623 
+```
+
+
+
+### 객체지향의 특징
+
+1. 캡슐화 : 필드와 메소드룰 묶어주는것
+2. 상속 : 부모가 갖는 자원(필드, 메모리) 을 아낌없이 꼭 물려주는것
+3. 다형성 : 메소드 오버라이딩 
+   - 메소드 오버라이딩 (MethodOverriding) => 메소드 재정의
+     - 상속에서 나온 개념
+     - 부모가 갖는 메소드를 자식클래스엣 재정의
+   - 메소드 오버로딩 (MethodOverloading)
+     - 한 클래스내에 동일한 메소드를 여러개 구현
+     - (단, 인자의 개수가 다르거나 자료형이 달라야 한다.)
 
 
 
@@ -217,21 +277,9 @@ for(String name : names) {
     - 메소드를 가지고 있다.
   - 컴파일러가 알아서 객체화 해주거나 연산을 위해 기본형으로 바꿔주는 등 묵시적 형변환을 해준다.
 
-
+[Java API 보러가기](https://docs.oracle.com/javase/8/docs/api/)
 
 
 
 ---
-
-#### 월말평가
-
-5문제
-
-3문제는 쉬운 문제
-
-2문제는 어려움 - 2차원 배열 가지고 놀기
-
-
-
-
 
