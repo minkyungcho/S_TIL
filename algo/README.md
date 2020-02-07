@@ -924,3 +924,419 @@ public class SequentialSearchTest1 {
 
 - 연산
 
+나를 볼 수 있는 소는 스택에 넣고 나를 볼 수 없는 소는 스택에서 제외한다. 그럼 스택에는 점점 커지는 소들이 남아있게 된다. 
+
+
+
+---
+
+>2020.02.05 수
+
+비선형구조인 그래프 구조는 그래프로 표현된 모든 자료를 빠짐없이 검색하는 것이 중요하다.
+
+1. 깊이 우선 탐색 DFS(Depth First Search)
+2. 너비 우선 탐색 BFS(Breadth First Search)
+
+## DFS 깊이우선탐색
+
+- stack 을 활용
+
+
+
+
+
+## BFS 너비우선탐색
+
+- queue 를 활용
+  - 다음 입력위치와 출력위치가 같은때 full
+  - offer, enQueue( )
+  - poll, deQueue( )
+  - isEmpty( )
+  - isFull( )
+  - peek( )
+
+
+
+## Queue 큐
+
+#### Q.마이쭈 나눠주기
+
+- 배열을 활용하여 풀기
+
+```java
+package com.ssafy.queue;
+import java.util.ArrayDeque;
+public class MyChew_array {
+	public static void main(String[] args) {
+		
+		int N = 20; // 마이쭈 개수
+		int person = 1; // 사원번호
+		
+		// 사원번호와 마이쭈개수를 담는 배열을 가진 큐.
+		ArrayDeque<int[]> queue = new ArrayDeque<>();
+		
+		while(true) {
+			// 1번 사원 줄서기 && 새로운 사원들의 줄 서기
+			queue.offer(new int[]{person++, 1});
+			
+			// 제일 앞에 있는 사원 뽑기
+			int[] p = queue.poll();
+			
+			// 마이쭈 개수 증가시키고 전체 개수에서 빼기
+			int num = p[1]++; 
+			N -= num;
+
+			// 전체 마이쭈 개수가 0보다 작거나 같아졌으면 마지막 마이쭈를 가져감. break;
+			if(N <= 0) {
+				System.out.printf("%d번 사원이 마지막 마이쭈 %d개를 가져갔습니다.\n", p[0], (num+N));
+				break;
+			}
+			
+			// 사원들이 몇개의 마이쭈를 가져갔는지 출력해주기.
+			System.out.printf("%d번 사원이 %d개의 마이쭈를 가져갔습니다. 남은 개수는 %d개 입니다.\n", p[0], num, N);
+			
+			// queue에서 빠져나온 사원이 다시 줄 선다.
+			queue.offer(p);
+		}
+	}
+}
+```
+
+- class 객체 만들어서 풀기
+
+```java
+package com.ssafy.queue;
+import java.util.ArrayDeque;
+public class MyChew_class {
+	static class Person{
+		int no;
+		int cnt;
+		public Person(int no, int cnt) {
+			super();
+			this.no = no;
+			this.cnt = cnt;
+		}
+	}
+	public static void main(String[] args) {
+		
+		int N = 20; // 마이쭈 개수
+		int person = 1; // 사원번호
+		
+		// Person 객체를 갖는 큐.
+		ArrayDeque<Person> queue = new ArrayDeque<>();
+		
+		while(true) {
+			// 1번 사원 줄서기 && 새로운 사원들의 줄 서기
+			queue.offer(new Person(person++, 1));
+			
+			// 제일 앞에 있는 사원 뽑기
+			Person p = queue.poll();
+			
+			// 마이쭈 개수 증가시키고 전체 개수에서 빼기
+			int num = p.cnt++; 
+			N -= num;
+			
+			// 전체 마이쭈 개수가 0보다 작거나 같아졌으면 마지막 마이쭈를 가져감. break;
+			if(N <= 0) {
+				System.out.printf("%d번 사원이 마지막 마이쭈 %d개를 가져갔습니다.\n", p.no, (num+N));
+				break;
+			}
+			
+			// 사원들이 몇개의 마이쭈를 가져갔는지 출력해주기.
+			System.out.printf("%d번 사원이 %d개의 마이쭈를 가져갔습니다. 남은 개수는 %d개 입니다.\n", p.no, num, N);
+			
+			// queue에서 빠져나온 사원이 다시 줄 선다.
+			queue.offer(p);
+		}
+	}
+}
+```
+
+- 비트 활용하여 풀기
+  - 유지해야할 수가 두개정도 일때 비트마스크를 활용하면 좋다!
+  - 8비트 왼쪽 쉬프트 하고 no 설정 `int p = 1;` `p << 8;`
+  - cnt 설정 `p+=1;` `int cnt = (byte) p;` 뒤의 8자리만 남아있으면 되기 때문에 형변환을 통해 앞을 날린다.
+  - `int no = P>>8;` 
+
+```java
+package com.ssafy.queue;
+import java.util.ArrayDeque;
+public class MyChew_array {
+	public static void main(String[] args) {
+		
+		int N = 20; // 마이쭈 개수
+		int person = 1; // 사원번호
+		
+		// int형 담는 큐.
+		ArrayDeque<Integer> queue = new ArrayDeque<>();
+		
+		while(true) {
+			
+			int p = (person++<<8)+1;
+			
+			// 1번 사원 줄서기 && 새로운 사원들의 줄 서기
+			queue.offer(p);
+			
+			// 제일 앞에 있는 사원 뽑기
+			p = queue.poll();
+			
+			// 마이쭈 개수 증가시키고 전체 개수에서 빼기
+			int num = (byte) p; //가져갈 개수 가져오기
+			int no = p>>8; // 사원번호 추출
+			N -= num;
+
+			// 전체 마이쭈 개수가 0보다 작거나 같아졌으면 마지막 마이쭈를 가져감. break;
+			if(N <= 0) {
+				System.out.printf("%d번 사원이 마지막 마이쭈 %d개를 가져갔습니다.\n", no, (num+N));
+				break;
+			}
+			
+			// 사원들이 몇개의 마이쭈를 가져갔는지 출력해주기.
+			System.out.printf("%d번 사원이 %d개의 마이쭈를 가져갔습니다. 남은 개수는 %d개 입니다.\n", no, num, N);
+			
+			// queue에서 빠져나온 사원이 다시 줄 선다.
+			queue.offer(++p); // 다음번에 가져갈 개수 늘리기
+		}
+	}
+}
+```
+
+#### Q.암호생성기
+
+- 기본
+
+```java
+package swea.d3;
+import java.io.FileInputStream;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
+import java.util.Scanner;
+public class Solution_d3_1225_암호생성기 {
+	public static void main(String[] args) throws Exception {
+		
+		System.setIn(new FileInputStream("res/swea/d3/1225_암호생성기2.txt"));
+		Scanner sc = new Scanner(System.in);
+		int T = 10;
+		ArrayDeque<Integer> queue = new ArrayDeque<>();
+		for(int testcase=1; testcase<T+1; testcase++) {
+			int tmp = Integer.parseInt(sc.next());
+			String t = sc.nextLine();
+
+			// queue에 데이터 넣기
+			for(int i=0; i<8; i++) {
+				queue.offer(sc.nextInt());
+			}
+			
+			out:
+			while(true) {
+				// 5번 주기로 싸이클 돈다
+				for(int j=1; j<6; j++) {
+					// 앞에 데이터 뒤로 보내기 peek, poll, offer
+					int first = queue.poll();
+					first -= j;
+					
+					// offer 할때 숫자가 0이면 암호 도출.
+					if(first<=0) {
+						first = 0;
+						queue.offer(first);
+						
+						System.out.print("#"+testcase+" ");
+						for(int q : queue) {
+							System.out.print(q+" ");
+						}
+						System.out.println();
+						queue.clear();
+						break out;
+					}
+					queue.offer(first);
+				}
+			}
+		}
+	}
+}
+```
+
+- bufferedreader 활용
+
+```java
+package swea.d3;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+public class Solution_d3_1225_암호생성기_T_Buffered {
+	public static void main(String[] args) throws IOException {
+		ArrayDeque<Integer> queue = new ArrayDeque<>();
+		int T = 10;
+		System.setIn(new FileInputStream("res/swea/d3/1225_암호생성기2.txt"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		int N = 8;
+		for (int testcase = 1; testcase <= T; testcase++) {
+			br.readLine();
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+			
+			for(int i=0; i<N; i++) {
+				queue.offer(Integer.parseInt(st.nextToken()));
+			}
+			
+			boolean isDone = false;
+			top:
+			while(!isDone) {
+				for (int i = 1; i <= 5 ; i++) {
+					int num = queue.poll()-i;
+					if(num<=0) {
+						num=0;
+						isDone = true;
+					}
+					queue.offer(num);
+					if(isDone) {
+						break top;
+					}
+				}
+			}
+			System.out.print("#"+testcase+" ");
+			for(Integer n : queue) {
+				System.out.print(n+" ");
+			}
+			System.out.println();
+			queue.clear();
+		}
+	}
+}
+```
+
+
+
+## List
+
+- 순서를 가진 데이터의 집합을 가리키는 추상자료형(abstract data type)
+- 동일한 데이터를 가지고 있어도 상관없다.
+
+### ArrayList
+
+- 배열을 기반으로 구현된 리스트
+- 초기사이즈나 최소사이즈를 주는 것이 좋다
+
+
+
+### LinkedList
+
+- 메모리의 동적할당을 기반으로 구현된 리스트
+
+
+
+---
+
+>2020.2.6 목
+
+
+
+선형 구조
+
+- 배열
+- list
+
+비선형 구조
+
+- 트리
+- 그래프
+
+
+
+### 트리 
+
+- 비선형 구조
+- 원소들 간에 1 : n 관계를 가지는 자료구조
+- 원소들 간에 계층관계를 가지는 계층형 자료구조
+- 상위 원소에서 하위 원소로 내려가면서 확장되는 트리(나무)모양의 구조
+
+#### 이진트리
+
+- 모든 노드들이 2개의 서브트리를 갖는 특별한 형태의 트리
+- 각 노드가 자식 노드를 최대한 2개까지만 가질 수 있는 트리
+  - 왼쪽 자식 노드
+  - 오른쪽 자식 노드
+
+- 레벨 i에서의 노드의 최대 개수는 2^i 개
+- 높이가 h인 이진트리가 가질 수 있는 노드의 최소 개수는 (h+1)개가 되며, 최대 개수는 (2^(h+1) - 1) 개가 된다.
+
+- 포화이진트리
+  - 모든레벨에 노드가 포화상태로 차 있는 이진 트리
+
+- 이진트리는 바이너리서칭 효과를 가지고 있다!
+- 탐색하는 것이 배열을 정렬시티는 것1
+- 트리 순회하는 기법 => DFS
+- 순회 : 트리의 노드들을 체계적으로 방문하는것
+  - 전위순회
+  - 중위순회 => DFS                                          
+  - 하위순회
+
+
+
+이진 트리의 인덱스를 보자
+
+- 왼쪽 자식은 부모인덱스의 2배. 오른쪽은 2배보다 1큰수.
+- 전체 배열의 개수는 노드+1 (1 ~ N)
+
+```java
+/**
+* 트리를 중위(LVR)로 순회하는 함수
+* @param index	 : vertex(현재 방문한 노드)의 index
+*/
+public static void inorder(int index) {
+
+    // index가 N보다 작거나 같을때까지만 순회함
+    // vertex가 경계 내에 있고, data가 있다.
+    if(index<N+1 && tree[index]!=0) {
+        // 왼쪽 자식 방문 	: vertex의 index*2
+        inorder(index<<1); // index*2
+        // vertex(현재 노드) 처리	
+        System.out.print(tree[index]+" ");
+        // 오른쪽 자식 방문	: vertex의 index*2+1
+        inorder((index<<1)+1); // index*2+1 
+    }
+
+}
+/**
+* 트리를 전위(VLR)로 순회하는 함수
+* @param index
+*/
+public static void preorder(int index) {
+		
+    // vertex가 경계 내에 있고, data가 있다.
+    if(index<N+1 && tree[index]!=0) {
+        // vertex(현재 노드) 처리	
+        System.out.print(tree[index]+" ");
+        // 왼쪽 자식 방문 	: vertex의 index*2
+        preorder(index<<1); // index*2
+        // 오른쪽 자식 방문	: vertex의 index*2+1
+        preorder((index<<1)+1); // index*2+1 
+    }
+
+}
+
+/**
+* 트리를 후위(LRV)로 순회하는 함수
+* @param index
+*/
+public static void postorder(int index) {
+		
+    // vertex가 경계 내에 있고, data가 있다.
+    if(index<N+1 && tree[index]!=0) {
+        // 왼쪽 자식 방문 	: vertex의 index*2
+        postorder(index<<1); // index*2
+        // 오른쪽 자식 방문	: vertex의 index*2+1
+        postorder((index<<1)+1); // index*2+1 
+        // vertex(현재 노드) 처리	
+        System.out.print(tree[index]+" ");
+    }
+    
+}
+```
+
