@@ -29,25 +29,28 @@ public class Main_1828_냉장고 {
 		}
 		
 		// sort 오름차순  왜 이걸로는 안돼..?
-//		for(int i=0; i<N; i++) {
-//			for (int j=i+1; j < N; j++) {
-//				if(temp[i][1]>temp[j][1]) {
-//					int t = temp[j][1];
-//					temp[j][1] = temp[i][1];
-//					temp[i][1] = t;
-//				}else {
-//					break;
-//				}
-//				
-//			}
-//		}
-		
-		Arrays.sort(temp, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[1] - o2[1];
+		for(int i=0; i<N; i++) {
+			for (int j=i+1; j < N; j++) {
+				if(temp[i][1]>temp[j][1]) {
+					int t = temp[j][1];
+					int tt = temp[j][0];
+					temp[j][1] = temp[i][1];
+					temp[j][0] = temp[i][0];
+					temp[i][1] = t;
+					temp[i][0] = tt;
+				}
+				
 			}
-		});
+		}
+		
+		
+		// API 사용
+//		Arrays.sort(temp, new Comparator<int[]>() {
+//			@Override
+//			public int compare(int[] o1, int[] o2) {
+//				return o1[1] - o2[1];
+//			}
+//		});
 		
 		int last = Integer.MIN_VALUE;
 		for (int i = 0; i < N; i++) {
@@ -57,7 +60,7 @@ public class Main_1828_냉장고 {
 			}
 		}
 		
-		
+		// 출력 
 //		for(int i=0; i<N; i++ ) {
 //			System.out.println(temp[i][0]+" "+temp[i][1]);
 //		}
